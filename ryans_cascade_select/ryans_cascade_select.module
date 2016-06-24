@@ -1,0 +1,133 @@
+<?php
+
+function ryans_cascade_select_block_info() { 
+
+      $blocks['cascading_dropdown'] = array(
+     'info' => t('Cascading Dropdown'),
+   );
+
+   return $blocks; 
+}
+
+
+function ryans_cascade_select_block_view($delta = NULL) { 
+
+    switch ( $delta ) { 
+
+      case 'cascading_dropdown':
+        $block['subject'] = "";
+        $block['content'] = ryans_cascade_select_cascading_dropdown();
+        break; 
+
+       default:
+         $block = array();
+         break;
+
+    }
+
+    return $block;
+}
+
+// You have to disable this function when you add this block in panelizer,
+// Or it will cause an Ajax error that prevents saving.
+function ryans_cascade_select_cascading_dropdown() {
+
+  $content = NULL;
+
+  //Instantiates cascading dropdown
+  // Hides box after selection
+  drupal_add_js('jQuery(document).ready(function () { jQuery(".cascadingDropDown").ssdCascadingDropDown(); 
+    jQuery(function ($) {        
+      $("#cascade-selector select").change(function() {
+        $(this).prop("disabled", true);
+      });
+    });
+    });', 'inline');
+
+    $modulepath = '/sites/all/modules/custom/ryans_cascade_select/js/';
+    
+    // Location of the files for the dropdown boxes
+    $path1 = $modulepath . 'make.json';
+    $path2 = $modulepath . 'colour.json';
+    $path3 = $modulepath . 'size.json';
+    $path4 = $modulepath . 'final.json';
+
+    $content .= '    
+    <form id="cascade-selector">
+
+      <select
+      name="category"
+      class="cascadingDropDown"
+
+      data-group="product-1"
+      data-target="make"
+      data-url="' . $path1 . '"
+      data-replacement="container1"
+
+      >
+      <option value="">Select category</option>
+      <option value="1">Shoes</option>
+      <option value="2">T-shirts</option>
+      <option value="3">Jeans</option>
+      <option value="4">Hats</option>
+      <option value="5">Belts</option>
+    </select>
+
+    <select
+    name="make"
+    class="cascadingDropDown"
+
+    data-group="product-1"
+    data-id="make"
+    data-target="colour"
+    data-url="' . $path2 . '"
+    data-replacement="container1"
+    data-default-label="Select make"
+
+    disabled
+    >
+  </select>
+
+  <select
+  name="colour"
+  class="cascadingDropDown"
+
+  data-group="product-1"
+  data-id="colour"
+  data-target="size"
+  data-url="' . $path3 . '"
+  data-replacement="container1"
+  data-default-label="Select colour"
+
+  disabled
+  >
+  </select>
+
+  <select
+  name="size"
+  class="cascadingDropDown"
+
+  data-group="product-1"
+  data-id="size"
+  data-default-label="Select size"
+  data-replacement="container1"
+  data-url="' . $path4 . '"
+  data-final
+
+  disabled
+  >
+  </select>
+
+  <input
+  type="submit"
+  class="small button"
+  value="ADD TO BASKET"
+  disabled
+  >
+
+  </form>';
+
+return $content;
+
+}
+
