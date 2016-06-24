@@ -7,5 +7,5 @@ After that, you can switch the function ryans_cascade_select_cascading_dropdown(
 
 - This requries jQuery 2x - you might be able to forego the jqmulti module by adding the jQuery 2X in the modules info file.
 - jqmulti needs the jquery library to live in the libraries/jquery folder
-- There is additional css that hides disabled <select> options
+- There is additional css that hides disabled `<select>` options
 - There is jquery that hides select options on select, by switching them back to disabled, which then uses the css to hide again. 
